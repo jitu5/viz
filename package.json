@@ -6,7 +6,7 @@
   "files": [
     "lib"
   ],
-  "homepage": ".",
+  "homepage": "https://jitu5.github.io/viz",
   "repository": {
     "type": "git",
     "url": "https://github.com/kedro-org/kedro-viz.git"
