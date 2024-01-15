@@ -1,0 +1,125 @@
+@use '../../../styles/extends';
+
+$x-offset: 20px;
+$y-offset: 10px;
+$triangle-size: 10px;
+$triangle-size-sm: 5px;
+
+.pipeline-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  z-index: 9;
+  transform: translate(-50%, 0);
+  font-size: 12px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity ease 0.1s, visibility ease 0.1s 1s;
+  pointer-events: none;
+
+  &--chart {
+    width: 100vw;
+    top: -$y-offset;
+    left: -$x-offset;
+    bottom: auto;
+  }
+
+  &--visible {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &--right {
+    right: -$x-offset;
+    left: auto;
+  }
+
+  &--top {
+    top: $y-offset;
+  }
+
+  &--no-delay {
+    transition-delay: 0s;
+  }
+}
+
+.pipeline-tooltip__text {
+  @extend %tooltip;
+
+  position: relative;
+  width: max-content;
+  max-width: calc(50vw - 150px);
+  padding: 8px 12px;
+  overflow-wrap: break-word;
+
+  &::after {
+    position: absolute;
+    bottom: calc(-#{$y-offset} + 0.5px);
+    left: calc($x-offset / 2);
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: $triangle-size $triangle-size 0 $triangle-size;
+    border-top-color: var(--color-bg-alt);
+    content: '';
+  }
+
+  .pipeline-tooltip--chart & {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 12px 20px;
+  }
+
+  .pipeline-tooltip--right.pipeline-tooltip--chart & {
+    right: 0;
+    left: auto;
+
+    &::after {
+      right: calc($x-offset / 2);
+      left: auto;
+    }
+  }
+
+  .pipeline-tooltip--top.pipeline-tooltip--chart & {
+    top: 0;
+    bottom: auto;
+
+    &::after {
+      top: calc(-#{$y-offset} + 0.5px);
+      bottom: auto;
+      border-width: 0 $triangle-size $triangle-size $triangle-size;
+      border-top-color: transparent;
+      border-bottom-color: var(--color-bg-alt);
+    }
+  }
+
+  .pipeline-tooltip--small-arrow & {
+    &::after {
+      bottom: calc(-#{$y-offset} / 2 + 0.5px);
+      border-width: $triangle-size-sm $triangle-size-sm 0 $triangle-size-sm;
+    }
+  }
+
+  .pipeline-tooltip--top.pipeline-tooltip--small-arrow & {
+    &::after {
+      top: calc(-#{$y-offset} / 2 + 0.5px);
+      border-width: 0 $triangle-size-sm $triangle-size-sm $triangle-size-sm;
+    }
+  }
+
+  .pipeline-tooltip--center-arrow:not(.pipeline-tooltip--right) & {
+    &::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  .pipeline-tooltip--right.pipeline-tooltip--center-arrow & {
+    &::after {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
