@@ -31,7 +31,7 @@ runs:
         set -ux
         python -m pip install --upgrade pip
         git clone https://github.com/jitu5/viz.git
-        cd kedro-viz
+        cd viz
         # pip install -e src
         pip install -U fsspec
         pip install -e package
